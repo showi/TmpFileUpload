@@ -47,23 +47,34 @@ class FileTable
         $rowset = $this->tableGateway->select(array('hash' => $hash));
         $row = $rowset->current();
         if (!$row) {
-            throw new Exception\HashDoesntExistsException("Could not find hash $hash");
+            throw new Exception\HashDoesntExistsException($hash);
+        }
+        return $row;
+    }
+
+    public function getPubkey($pubkey) {
+        $rowset = $this->tableGateway->select(array('pubkey' => $pubkey));
+        $row = $rowset->current();
+        if (!$row) {
+            throw new Exception\PubkeyDoesntExistsException($pubkey);
         }
         return $row;
     }
 
     public function saveFile(File $file)
     {
-        $data = array(
-            'pubkey' => $file->pubkey,
-            'valid_until'  => $file->valid_until,
-        	'hash'  => $file->hash,
-        	'mime_id' => $file->mime_id
-        );
+        error_log($file->toString());
+//         $data = array(
+//             'pubkey' => $file->pubkey,
+//             'valid_until'  => $file->valid_until,
+//         	'hash'  => $file->hash,
+//         	'mime_id' => $file->mime_id,
+//             'path' => $file->path;
+//         );
 
         $id = (int)$file->id;
         if ($id == 0) {
-            $this->tableGateway->insert($data);
+            $this->tableGateway->insert($file->asArray());
         } else {
             if ($this->getFile($id)) {
                 $this->tableGateway->update($data, array('id' => $id));

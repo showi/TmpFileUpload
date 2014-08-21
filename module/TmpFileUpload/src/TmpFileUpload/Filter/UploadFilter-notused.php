@@ -11,10 +11,22 @@
 *
 * See the GNU General Public License for more details.
 */
-?>
-<div>
-    <a href="<?php  echo $this->url('upload')?>">&laquo; Main</a>
-</div>
+namespace TmpFileUpload\Filter;
+use Zend\InputFilter\InputFilter;
 
-<h2>File Upload Success</h2>
-<?php  \Zend\Debug\Debug::dump($this->formData); ?>
+class UploadFilter extends InputFilter {
+    public function init()
+    {
+        $this->add(array(
+            'name' => 'glassname',
+            'required' => true,
+            'filters' => array(
+                array('name' => 'StringToUpper'),
+            ),
+            'validators' => array(
+                array( 'name' => 'StringLength', 'options' => array('min' => 3),
+                ),
+            ))
+        );
+    }
+}

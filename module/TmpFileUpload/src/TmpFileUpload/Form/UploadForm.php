@@ -34,90 +34,22 @@ use Zend\Filter\Exception;
 //     }
 // }
 use TmpFileUpload\Exception as MyException;
+use TmpFileUpload\Helper\CommonHelper as MyHelper;
+use TmpFileUpload\Filter as MyFilter;
 
-class MyFilter extends \Zend\InputFilter\InputFilter {
-    public function toString() {
-        return "";
-    }
-
-}
-
-class TmpUploadFilter extends RenameUpload {
-
-    protected $parent = Null;
-    protected $fileTable = Null;
-
-    public function __construct($parent, $targetOrOptions)
-    {
-        parent::__construct($targetOrOptions);
-        $this->setParent($parent);
-        $this->options['hash'] = Null;
-        $this->fileTable = $this->parent->getFileTable();
-    }
-    public function setParent($parent)
-    {
-        error_log('Setting parent: ' . \spl_object_hash($parent));
-        $this->parent = $parent;
-    }
-
-    public function getParent()
-    {
-        return $this->parent;
-    }
-
-    public function filter($value) {
-        error_log('Filtering...' . print_r($value, true));
-        if (isset($value['tmp_name']) && !isset($this->alreadyFiltered[$value['tmp_name']])) {
-            $hash = $this->getHash($value['tmp_name']);
-            $value['hash'] = $hash;
-            //$this->setOptions(array('hash' => $hash));
-        }
-        $filter = parent::filter($value);
-        if (false == $filter) {
-        	return false;
-        }
-        $value = $filter;
-        error_log('Filtering...' . print_r($value, true));
-        return $value;
-    }
-
-
-    protected function getHash($path) {
-        error_log("Hashing file: $path");
-//         function my_hash_file($filename, $algo="sha256", $raw_output=false) {
-//             return hash_file($algo, $filename, $raw_output);
-//         }
-        $hash = hash_file('sha256', $path, false);
-        $table = $this->getParent()->getFileTable();
-        try {
-            $table->getHash($hash);
-        } catch (MyException\HashDoesntExistsException $e) {
-            throw new MyException\HashExistsException($hash);
-            return \hash_file('sha256', $path, false);
-        }
-        error_log('File exists? ' . (file_exists($path) ? 'Yes' : 'No'));
-        throw new MyException\HashExistsException($hash);
-    }
-
-//     protected function applyRandomToFilename($source, $filename)
-//     {
-//         $info = pathinfo($filename);
-//         $filename = $info['filename'] . uniqid('_');
-//         $sourceinfo = pathinfo($source);
-//         $extension = '';
-//         if ($this->getUseUploadExtension() === true && isset($sourceinfo['extension'])) {
-//             $extension .= '.' . $sourceinfo['extension'];
-//         } elseif (isset($info['extension'])) {
-//             $extension .= '.' . $info['extension'];
-//         }
-//         return $filename . $extension;
+// class MyFilter extends \Zend\InputFilter\InputFilter {
+//     public function toString() {
+//         return "";
 //     }
-}
+// }
+
+
 
 class UploadForm extends Form //implements ServiceLocatorAwareInterface
 {
     protected $serviceLocator;
     protected $fileTable;
+    protected $mimeTable;
 
 	public function __construct($serviceLocator, $name = null, $options = array())
 	{
@@ -144,6 +76,15 @@ class UploadForm extends Form //implements ServiceLocatorAwareInterface
 	        $this->fileTable = $sm->get('TmpFileUpload\Model\FileTable');
 	    }
 	    return $this->fileTable;
+	}
+
+	public function getMimeTable()
+	{
+	    if (!$this->mimeTable) {
+	        $sm = $this->getServiceLocator();
+	        $this->mimeTable = $sm->get('TmpFileUpload\Model\MimeTable');
+	    }
+	    return $this->mimeTable;
 	}
 
 	public function addElements()
@@ -184,11 +125,12 @@ class UploadForm extends Form //implements ServiceLocatorAwareInterface
 // 			        'randomize'         => true
 // 		  )
 // 		);
-        $tmpUploadFilter = new TmpUploadFilter($this, array(
+        $tmpUploadFilter = new MyFilter\UploadFilter($this, array(
 					'target'          => './data/tmpuploads/',
 					'overwrite'       => false,
 					'use_upload_name' => false,
-			        'randomize'         => true
+			        'randomize'         => true,
+                    //'max_size' => ini_get('post_max_size'), useless
 		  ));
         $file->getFilterChain()->attach($tmpUploadFilter, 1);
 		$inputFilter->add($file);

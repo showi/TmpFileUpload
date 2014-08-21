@@ -44,11 +44,11 @@ return array(
                     'serve' => array(
                         'type' => 'segment',
                         'options' => array(
-                            'route' => '/serve[/:hash]',
+                            'route' => '/serve[/:pubkey]',
                             //'route'    => '/album[/:action][/:id]',
                             'constraints' => array(
                               //  'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                                'hash'     => '[a-zA-Z0-9]+',
+                                'pubkey'     => '[a-zA-Z0-9]+',
                             ),
                             'defaults' => array(
                                 'controller' => 'TmpFileUpload\Controller\Upload',

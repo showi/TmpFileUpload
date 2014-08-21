@@ -18,6 +18,8 @@ use Zend\View\Model\ViewModel;
 use Zend\Session\Container;
 use TmpFileUpload\Form\UploadForm;
 use TmpFileUpload\Exception;
+use TmpFileUpload\Model;
+use TmpFileUpload\Helper\CommonHelper as MyHelper;
 
 class UploadController extends AbstractActionController {
 
@@ -36,6 +38,8 @@ class UploadController extends AbstractActionController {
 
     public function indexAction()
     {
+        error_log('----- --- ----- --- ----- --- ----- --- ----- --- -----');
+
         #$mime = $this->getMimeTable()->fetchAll('image');
         try {
             $form = new UploadForm($this->getServiceLocator(), 'file-form');
@@ -49,6 +53,12 @@ class UploadController extends AbstractActionController {
 
                     if ($form->isValid()) {
                         $data = $form->getData();
+                        #$data['valid_until'] = MyHelper::validUntil("+5M");
+                        #error_log("DATA: " . print_r($data, true));
+                        $file = new Model\File();
+                        $file->exchangeArray($data);
+                        $tbl = $this->getFileTable();
+                        $tbl->saveFile($file);
                         // Form is valid, save the form!
                         // return
                         // $this->redirect()->toRoute('upload-form/success');
@@ -58,20 +68,35 @@ class UploadController extends AbstractActionController {
 
             }
         } catch (Exception\HashExistsException $e) {
-            return $this->redirectToLink($e->getMessage());
+            $row = $this->getFileTable()->getHash($e->getMessage());
+            return $this->redirectToLink($row->pubkey);
+        } catch (Exception\FileSizeMaxException $e) {
+            return $this->redirectToIndex('File is to big: ' .
+                    $e->getMessage());
         }
+//         $message = Null;
+//         if (key_exists('message', $this->sessionContainer)) {
+            $message = $this->sessionContainer->message;
+//         }
         return new ViewModel(
             array(
                 'mimes' => $this->getMimeTable()->fetchAll(),
-                'form' => $form
+                'form' => $form,
+                'message' => $message,
             ));
         // return array('form' => $form);
     }
 
-    protected function redirectToLink($hash)
+    protected function redirectToIndex($message = null) {
+        if (!is_null($message)) {
+            $this->sessionContainer->message = $message;
+        }
+        return $this->redirect()->toRoute('upload');
+    }
+    protected function redirectToLink($pubkey)
     {
-        $this->sessionContainer->hash = $hash;
-        error_log("Redirect to hash: $hash");
+        $this->sessionContainer->pubkey = $pubkey;
+        error_log("Redirect to pubkey: $pubkey");
         return $this->redirect()->toRoute('upload/serve');
     }
 
@@ -85,12 +110,12 @@ class UploadController extends AbstractActionController {
 
     public function serveAction()
     {
-        $hash = $this->sessionContainer->hash;
-        if (is_null($hash)) {
-            $hash = $this->params()->fromRoute('hash');
+        $pubkey = $this->sessionContainer->pubkey;
+        if (is_null($pubkey)) {
+            $pubkey = $this->params()->fromRoute('pubkey');
         }
         return array(
-            'hash' => $hash
+            'pubkey' => $pubkey
         );
     }
 

@@ -11,21 +11,28 @@
 *
 * See the GNU General Public License for more details.
 */
-$title = 'TmpFileUpload Zf2';
+$title = 'TmpFileUpload';
 $this->headTitle($title);
+use TmpFileUpload\Helper\CommonHelper as Helper;
 ?>
 <div>
-    <a href="<?php  echo $this->url('upload')?>">&laquo; Back to Examples Listing</a>
+<?php if(!is_null($message)) :?>
+<div style="background-color: black; color: white">
+    <h4>Error</h4>
+    <p><?php echo $message ?></p>
 </div>
-
-<h2><?php  echo ($this->title) ?: 'File Upload Examples' ?></h2>
-
+<?php endif; ?>
+<p><h4>Max File Size:</h4>
+<ul>
+<li><?php echo Helper::formatBytes(Helper::getUploadMaxFilesize()); ?></li>
+</ul>
+<h4>Valid MIME</h4>
 <ul>
 <?php  foreach ($mimes as $mime) : ?>
     <li><?php  echo $this->escapeHtml($mime->value);?></li>
 <?php  endforeach; ?>
 </ul>
-
+</p>
 <?php
 // Init Form
 $form = $this->form;
@@ -42,9 +49,6 @@ $errorsHelper
 <?php  echo $this->form()->openTag($form); ?>
 <fieldset>
     <legend><?php  echo ($this->legend) ?: 'Single File Upload' ?></legend>
-
-
-
     <?php
     $elem = $form->get('file-upload');
     $elem->setLabelAttributes(array('class' => 'control-label'));
@@ -80,3 +84,4 @@ $errorsHelper
 
 </fieldset>
 <?php  echo $this->form()->closeTag($form); ?>
+</div>
