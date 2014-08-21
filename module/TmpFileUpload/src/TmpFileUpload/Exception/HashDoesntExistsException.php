@@ -11,5 +11,6 @@
 *
 * See the GNU General Public License for more details.
 */
+
 namespace TmpFileUpload\Exception;
 class HashDoesntExistsException extends \ErrorException {}

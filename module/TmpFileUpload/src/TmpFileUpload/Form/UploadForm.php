@@ -19,33 +19,15 @@ use Zend\Form\Form;
 use Zend\InputFilter;
 use Zend\Filter\File\RenameUpload;
 use Zend\Form\Annotation\Input;
-// use Zend\Validator\AbstractValidator;
-// use Zend\Http\Header\AbstractAccept;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Ldap\Filter\AbstractFilter;
 use Zend\Filter\Exception;
-// class FilterUpload extends InputFilter\Input {
-
-//     public function isValid($context = null) {
-//         $rawValue  = $this->getRawValue();
-//         error_log($rawValue);
-//         return False;
-//     }
-// }
 use TmpFileUpload\Exception as MyException;
 use TmpFileUpload\Helper\CommonHelper as MyHelper;
 use TmpFileUpload\Filter as MyFilter;
 
-// class MyFilter extends \Zend\InputFilter\InputFilter {
-//     public function toString() {
-//         return "";
-//     }
-// }
-
-
-
-class UploadForm extends Form //implements ServiceLocatorAwareInterface
+class UploadForm extends Form
 {
     protected $serviceLocator;
     protected $fileTable;
@@ -97,49 +79,22 @@ class UploadForm extends Form //implements ServiceLocatorAwareInterface
                 'id' => 'file-upload',
             ));
         $this->add($file);
-        // Text Input
-//         $text = new Element\Text('text');
-//         $text->setLabel('Text Entry');
-//         $this->add($text);
-	}
+    }
 
-	public function createInputFilter()
-	{
-		$inputFilter = new InputFilter\InputFilter();
-		//$t = new RenameUpload();
-//         error_log('createInputFilter');
-//         $serviceLocator = $this->getServiceLocator();
-//         error_log("ServiceLocator: $serviceLocator");
-//         $serviceLocator->get('uploadfilter');
-		// File Input
-// 		$upload = new FilterUpload();
-//         $inputFilter->add($upload);
-		$file = new InputFilter\FileInput('file-upload');
-		$file->setRequired(true);
-// 		$file->getFilterChain()->attachByName(
-// 			'TmpFileUpload\Form\MyRenameUpload',
-// 			array(
-// 					'target'          => './data/tmpuploads/',
-// 					'overwrite'       => false,
-// 					'use_upload_name' => false,
-// 			        'randomize'         => true
-// 		  )
-// 		);
-        $tmpUploadFilter = new MyFilter\UploadFilter($this, array(
-					'target'          => './data/tmpuploads/',
-					'overwrite'       => false,
-					'use_upload_name' => false,
-			        'randomize'         => true,
-                    //'max_size' => ini_get('post_max_size'), useless
-		  ));
+    public function createInputFilter()
+    {
+        $inputFilter = new InputFilter\InputFilter();
+        $file = new InputFilter\FileInput('file-upload');
+        $file->setRequired(true);
+        $tmpUploadFilter = new MyFilter\UploadFilter($this,
+            array(
+                'target' => './data/tmpuploads/',
+                'overwrite' => false,
+                'use_upload_name' => false,
+                'randomize' => true
+            ));
         $file->getFilterChain()->attach($tmpUploadFilter);
-		$inputFilter->add($file);
-//         $inputFilter->add(new MyFilter());
-// 		// Text Input
-// 		$text = new InputFilter\Input('text');
-// 		$text->setRequired(false);
-// 		$inputFilter->add($text);
-
-		return $inputFilter;
-	}
+        $inputFilter->add($file);
+        return $inputFilter;
+    }
 }
