@@ -19,13 +19,14 @@ use TmpFileUpload\Helper\CommonHelper as Helper;
 </div>
 <h2>Share</h2>
 <?php
-$pubkey = $this->formData['file-upload']['pubkey'];
+error_log('formData: ' . print_r($this->formData, true));
+$pubkey = $this->formData['pubkey'];
 $link = "/upload/serve/$pubkey";
-$mime = $this->formData['file-upload']['mime'];
+$mime = $this->formData['mime'];
 $is_image = Helper::startsWith($mime, 'image/') ? true : false;
 $img = '';
 if ($is_image) {
-    $img = '<img style="width: 50px; height: 50px" src="/upload/serve/' . $pubkey .'">';
+    $img = '<img style="width: 50px;" src="/upload/serve/' . $pubkey .'">';
 }
 ?>
-Share: <?php echo $img; ?><a href="<?php echo $link; ?>"><?php echo $link; ?></a>
+<a href="<?php echo $link; ?>"><?php echo $img; ?>&nbsp;<?php echo $link; ?></a>

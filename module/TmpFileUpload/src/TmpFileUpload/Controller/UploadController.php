@@ -54,12 +54,17 @@ class UploadController extends AbstractActionController {
                     $file->exchangeArray($data);
                     $tbl = $this->getFileTable();
                     $tbl->saveFile($file);
-                    return $this->redirectToSuccessPage($form->getData());
+                    $data = $file->getArrayCopy();
+                    $data['mime'] = $this->mimeTable->getMime($data['mime_id']).value;
+                    return $this->redirectToSuccessPage($data);
                 }
             }
         } catch (Exception\HashExistsException $e) {
             $row = $this->getFileTable()->getHash($e->getMessage());
-            return $this->redirectToLink($row->pubkey);
+            $data = $row->getArrayCopy();
+            error_log('HASH EXISTS: ' . print_r($data, true));
+            $data['mime'] = $this->getMimeTable()->getMime($row->mime_id)->value;
+            return $this->redirectToSuccessPage($data);
         } catch (Exception\FileSizeMaxException $e) {
             return $this->redirectToIndex(
                 'File is to big: ' . $e->getMessage());
@@ -81,15 +86,16 @@ class UploadController extends AbstractActionController {
         return $this->redirect()->toRoute('upload');
     }
 
-    protected function redirectToLink($pubkey)
-    {
-        $this->sessionContainer->pubkey = $pubkey;
-        error_log("Redirect to pubkey: $pubkey");
-        return $this->redirect()->toRoute('upload/success');
-    }
+//     protected function redirectToLink($pubkey)
+//     {
+//         $this->sessionContainer->pubkey = $pubkey;
+//         error_log("Redirect to pubkey: $pubkey");
+//         return $this->redirect()->toRoute('upload/success');
+//     }
 
     protected function redirectToSuccessPage($formData = null)
     {
+        error_log('LOG: ' . print_r($formData, true));
         $this->sessionContainer->formData = $formData;
         $response = $this->redirect()->toRoute('upload/success');
         $response->setStatusCode(303);

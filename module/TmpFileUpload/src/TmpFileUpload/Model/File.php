@@ -51,10 +51,8 @@ class File implements InputFilterAwareInterface
         if (key_exists('file-upload', $data)) {
             $data = $data['file-upload'];
         }
-        error_log('ExchangeArray: ' . print_r($data, true));
         $this->id = (isset($data['id'])) ? $data['id'] : null;
         foreach ($this->_fields_name as $idx => $key) {
-            error_log("Setting key: $key");
             $this->$key = (isset($data[$key])) ? $data[$key] : null;
         }
     }
