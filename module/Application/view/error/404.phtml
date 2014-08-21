@@ -1,9 +1,57 @@
-<h1><?php echo $this->translate('A 404 error occurred') ?></h1>
-<h2><?php echo $this->message ?></h2>
-
-<?php if (isset($this->reason) && $this->reason): ?>
+<h1><?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->translate('A 404 error occurred') ?></h1>
+<h2><?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->message ?></h2>
 
 <?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ if (isset($this->reason) && $this->reason): ?>
+
+<?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/
 $reasonMessage= '';
 switch ($this->reason) {
     case 'error-controller-cannot-dispatch':
@@ -24,16 +72,88 @@ switch ($this->reason) {
 }
 ?>
 
-<p><?php echo $reasonMessage ?></p>
+<p><?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $reasonMessage ?></p>
 
-<?php endif ?>
+<?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ endif ?>
 
-<?php if (isset($this->controller) && $this->controller): ?>
+<?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ if (isset($this->controller) && $this->controller): ?>
 
 <dl>
-    <dt><?php echo $this->translate('Controller') ?>:</dt>
-    <dd><?php echo $this->escapeHtml($this->controller) ?>
+    <dt><?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->translate('Controller') ?>:</dt>
+    <dd><?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->escapeHtml($this->controller) ?>
 <?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/
 if (isset($this->controller_class)
     && $this->controller_class
     && $this->controller_class != $this->controller
@@ -44,64 +164,412 @@ if (isset($this->controller_class)
 </dd>
 </dl>
 
-<?php endif ?>
+<?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ endif ?>
 
-<?php if (isset($this->display_exceptions) && $this->display_exceptions): ?>
+<?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ if (isset($this->display_exceptions) && $this->display_exceptions): ?>
 
-<?php if(isset($this->exception) && $this->exception instanceof Exception): ?>
+<?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ if(isset($this->exception) && $this->exception instanceof Exception): ?>
 <hr/>
-<h2><?php echo $this->translate('Additional information') ?>:</h2>
-<h3><?php echo get_class($this->exception); ?></h3>
+<h2><?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->translate('Additional information') ?>:</h2>
+<h3><?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo get_class($this->exception); ?></h3>
 <dl>
-    <dt><?php echo $this->translate('File') ?>:</dt>
+    <dt><?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->translate('File') ?>:</dt>
     <dd>
-        <pre class="prettyprint linenums"><?php echo $this->exception->getFile() ?>:<?php echo $this->exception->getLine() ?></pre>
+        <pre class="prettyprint linenums"><?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->exception->getFile() ?>:<?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->exception->getLine() ?></pre>
     </dd>
-    <dt><?php echo $this->translate('Message') ?>:</dt>
+    <dt><?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->translate('Message') ?>:</dt>
     <dd>
-        <pre class="prettyprint linenums"><?php echo $this->exception->getMessage() ?></pre>
+        <pre class="prettyprint linenums"><?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->exception->getMessage() ?></pre>
     </dd>
-    <dt><?php echo $this->translate('Stack trace') ?>:</dt>
+    <dt><?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->translate('Stack trace') ?>:</dt>
     <dd>
-        <pre class="prettyprint linenums"><?php echo $this->exception->getTraceAsString() ?></pre>
+        <pre class="prettyprint linenums"><?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->exception->getTraceAsString() ?></pre>
     </dd>
 </dl>
 <?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/
     $e = $this->exception->getPrevious();
     if ($e) :
 ?>
 <hr/>
-<h2><?php echo $this->translate('Previous exceptions') ?>:</h2>
+<h2><?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->translate('Previous exceptions') ?>:</h2>
 <ul class="unstyled">
-    <?php while($e) : ?>
+    <?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ while($e) : ?>
     <li>
-        <h3><?php echo get_class($e); ?></h3>
+        <h3><?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo get_class($e); ?></h3>
         <dl>
-            <dt><?php echo $this->translate('File') ?>:</dt>
+            <dt><?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->translate('File') ?>:</dt>
             <dd>
-                <pre class="prettyprint linenums"><?php echo $e->getFile() ?>:<?php echo $e->getLine() ?></pre>
+                <pre class="prettyprint linenums"><?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $e->getFile() ?>:<?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $e->getLine() ?></pre>
             </dd>
-            <dt><?php echo $this->translate('Message') ?>:</dt>
+            <dt><?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->translate('Message') ?>:</dt>
             <dd>
-                <pre class="prettyprint linenums"><?php echo $e->getMessage() ?></pre>
+                <pre class="prettyprint linenums"><?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $e->getMessage() ?></pre>
             </dd>
-            <dt><?php echo $this->translate('Stack trace') ?>:</dt>
+            <dt><?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->translate('Stack trace') ?>:</dt>
             <dd>
-                <pre class="prettyprint linenums"><?php echo $e->getTraceAsString() ?></pre>
+                <pre class="prettyprint linenums"><?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $e->getTraceAsString() ?></pre>
             </dd>
         </dl>
     </li>
     <?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/
         $e = $e->getPrevious();
         endwhile;
     ?>
 </ul>
-<?php endif; ?>
+<?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ endif; ?>
 
-<?php else: ?>
+<?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ else: ?>
 
-<h3><?php echo $this->translate('No Exception available') ?></h3>
+<h3><?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->translate('No Exception available') ?></h3>
 
-<?php endif ?>
+<?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ endif ?>
 
-<?php endif ?>
+<?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ endif ?>

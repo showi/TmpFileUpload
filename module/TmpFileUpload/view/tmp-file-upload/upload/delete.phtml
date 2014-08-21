@@ -1,24 +1,108 @@
 <?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/
 // module/Album/view/album/album/delete.phtml:
 
 $title = 'Delete album';
 $this->headTitle($title);
 ?>
-<h1><?php echo $this->escapeHtml($title); ?></h1>
+<h1><?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->escapeHtml($title); ?></h1>
 
 <p>Are you sure that you want to delete
-    '<?php echo $this->escapeHtml($album->title); ?>' by
-    '<?php echo $this->escapeHtml($album->artist); ?>'?
+    '<?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->escapeHtml($album->title); ?>' by
+    '<?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->escapeHtml($album->artist); ?>'?
 </p>
 <?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/
 $url = $this->url('album', array(
     'action' => 'delete',
     'id'     => $this->id,
 ));
 ?>
-<form action="<?php echo $url; ?>" method="post">
+<form action="<?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $url; ?>" method="post">
 <div>
-    <input type="hidden" name="id" value="<?php echo (int) $album->id; ?>" />
+    <input type="hidden" name="id" value="<?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo (int) $album->id; ?>" />
     <input type="submit" name="del" value="Yes" />
     <input type="submit" name="del" value="No" />
 </div>

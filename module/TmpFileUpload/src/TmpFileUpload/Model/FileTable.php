@@ -43,7 +43,7 @@ class FileTable
         return $row;
     }
 
-    public function hashExists($hash) {
+    public function getHash($hash) {
         $rowset = $this->tableGateway->select(array('hash' => $hash));
         $row = $rowset->current();
         if (!$row) {

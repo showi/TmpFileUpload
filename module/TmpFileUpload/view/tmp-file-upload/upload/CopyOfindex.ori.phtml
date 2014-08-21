@@ -1,21 +1,105 @@
 <?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/
 
 $title = 'TmpFileUpload Zf2';
 $this->headTitle($title);
 ?>
 <div>
-    <a href="<?php echo $this->url('upload')?>">&laquo; Back to Examples Listing</a>
+    <a href="<?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->url('upload')?>">&laquo; Back to Examples Listing</a>
 </div>
 
-<h2><?php echo ($this->title) ?: 'File Upload Examples' ?></h2>
+<h2><?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo ($this->title) ?: 'File Upload Examples' ?></h2>
 
 <ul>
-<?php foreach ($mimes as $mime) : ?>
-    <li><?php echo $this->escapeHtml($mime->value);?></li>
-<?php endforeach; ?>
+<?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ foreach ($mimes as $mime) : ?>
+    <li><?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->escapeHtml($mime->value);?></li>
+<?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ endforeach; ?>
 </ul>
 
 <?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/
 // Init Form
 $form = $this->form;
 $form->setAttribute('class', 'form-horizontal');
@@ -28,48 +112,252 @@ $errorsHelper
     ->setMessageSeparatorString('</div><div class="help-block">')
     ->setMessageCloseString('</div>');
 ?>
-<?php echo $this->form()->openTag($form); ?>
+<?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->form()->openTag($form); ?>
 <fieldset>
-    <legend><?php echo ($this->legend) ?: 'Single File Upload' ?></legend>
+    <legend><?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo ($this->legend) ?: 'Single File Upload' ?></legend>
 
     <?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/
 //     $elem = $form->get('text');
 //     $elem->setLabelAttributes(array('class' => 'control-label'));
 //     $errors = $elem->getMessages();
 //     $errorClass = (!empty($errors)) ? ' error' : '';
     ?>
-    <div class="control-group<?php echo $errorClass ?>">
-        <?php echo $this->formLabel($elem); ?>
+    <div class="control-group<?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $errorClass ?>">
+        <?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->formLabel($elem); ?>
         <div class="controls">
-            <?php echo $this->formText($elem); ?>
-            <?php echo $errorsHelper($elem); ?>
+            <?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->formText($elem); ?>
+            <?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $errorsHelper($elem); ?>
         </div>
     </div>
 
     <?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/
     $elem = $form->get('file-upload');
     $elem->setLabelAttributes(array('class' => 'control-label'));
     $errors = $elem->getMessages();
     $errorClass = (!empty($errors)) ? ' error' : '';
     ?>
-    <div class="control-group<?php echo $errorClass ?>">
-        <?php echo $this->formLabel($elem); ?>
+    <div class="control-group<?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $errorClass ?>">
+        <?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->formLabel($elem); ?>
         <div class="controls">
-            <?php echo $this->formFile($elem); ?>
-            <?php echo $errorsHelper($elem); ?>
-            <?php if (!empty($this->tempFiles)) { ?>
+            <?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->formFile($elem); ?>
+            <?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $errorsHelper($elem); ?>
+            <?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ if (!empty($this->tempFiles)) { ?>
                 <!--
                 Note: You might not want to render the file input in this
                 case either, depending on your use-case.
                 -->
                 <div class="help-block">
                     Uploaded: <ul>
-                    <?php foreach ($this->tempFiles as $tempFile) { ?>
-                        <li><?php echo $this->escapeHtml($tempFile['name']) ?></li>
-                    <?php } ?>
+                    <?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ foreach ($this->tempFiles as $tempFile) { ?>
+                        <li><?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->escapeHtml($tempFile['name']) ?></li>
+                    <?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ } ?>
                     </ul>
                 </div>
-            <?php } ?>
+            <?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ } ?>
         </div>
     </div>
 
@@ -80,4 +368,16 @@ $errorsHelper
     </div>
 
 </fieldset>
-<?php echo $this->form()->closeTag($form); ?>
+<?php
+/*
+* Copyright (c) 2014 Joachim Basmaison
+*
+* This program is free software; you can redistribute it and/or modify it
+* under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License,
+* or (at your option) any later version. This program is distributed in the
+* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
+* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+*
+* See the GNU General Public License for more details.
+*/ echo $this->form()->closeTag($form); ?>

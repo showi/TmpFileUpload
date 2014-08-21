@@ -68,7 +68,7 @@ class TmpUploadFilter extends RenameUpload {
     public function filter($value) {
         error_log('Filtering...' . print_r($value, true));
         if (isset($value['tmp_name']) && !isset($this->alreadyFiltered[$value['tmp_name']])) {
-            $hash = $this->hashFile($value['tmp_name']);
+            $hash = $this->getHash($value['tmp_name']);
             $value['hash'] = $hash;
             //$this->setOptions(array('hash' => $hash));
         }
@@ -82,7 +82,7 @@ class TmpUploadFilter extends RenameUpload {
     }
 
 
-    protected function hashFile($path) {
+    protected function getHash($path) {
         error_log("Hashing file: $path");
 //         function my_hash_file($filename, $algo="sha256", $raw_output=false) {
 //             return hash_file($algo, $filename, $raw_output);
@@ -90,7 +90,7 @@ class TmpUploadFilter extends RenameUpload {
         $hash = hash_file('sha256', $path, false);
         $table = $this->getParent()->getFileTable();
         try {
-            $table->hashExists($hash);
+            $table->getHash($hash);
         } catch (MyException\HashDoesntExistsException $e) {
             throw new MyException\HashExistsException($hash);
             return \hash_file('sha256', $path, false);
