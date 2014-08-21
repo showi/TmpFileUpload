@@ -26,19 +26,22 @@ class File implements InputFilterAwareInterface
     public $valid_until;
     public $hash;
     public $mime_id;
+    public $mime;
+    public $path;
+
     protected $_fields_name = array('pubkey', 'valid_until', 'hash', 'mime_id',
             'path');
     protected $inputFilter;
 
     public function exchangeArray($data)
     {
-        if (!key_exists('file-upload', $data)) {
-            return;
+        if (key_exists('file-upload', $data)) {
+            $data = $data['file-upload'];
         }
-        $data = $data['file-upload'];
         error_log('ExchangeArray: ' . print_r($data, true));
         $this->id     = (isset($data['id']))     ? $data['id']     : null;
-        foreach($this->_fields_name as $key) {
+        foreach($this->_fields_name as $idx => $key) {
+            error_log("Setting key: $key");
             $this->$key = (isset($data[$key]))? $data[$key] : null;
         }
 //         $this->pubkey = (isset($data['pubkey'])) ? $data['pubkey'] : null;
@@ -51,7 +54,9 @@ class File implements InputFilterAwareInterface
      // Add the following method:
     public function getArrayCopy()
     {
-        return get_object_vars($this);
+        $a = get_object_vars($this);
+        unset($a['_fields_name'], $a['inputFilter'], $a['mime']);
+        return $a;
     }
 
     public function setInputFilter(InputFilterInterface $inputFilter)
@@ -119,6 +124,24 @@ class File implements InputFilterAwareInterface
             		),
             )));
             $inputFilter->add($factory->createInput(array(
+                'name'     => 'path',
+                'required' => true,
+                'filters'  => array(
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
+                ),
+                'validators' => array(
+                    array(
+                        'name'    => 'StringLength',
+                        'options' => array(
+                            'encoding' => 'ascii',
+                            'min'      => 1,
+                            'max'      => 100,
+                        ),
+                    ),
+                ),
+            )));
+            $inputFilter->add($factory->createInput(array(
                 'name'     => 'valid_until',
                 'required' => true,
 //                 'filters'  => array(
@@ -155,13 +178,14 @@ class File implements InputFilterAwareInterface
 
     public function asArray()
     {
-        $data = array();
-        foreach($this->_fields_name as $key)
-        {
-            $data[$key] = $this->$key;
-        }
-        error_log('asArray: ' . print_r($data, true));
-        return $data;
+        return $this->getArrayCopy();
+//         $data = array();
+//         foreach($this->_fields_name as $key)
+//         {
+//             $data[$key] = $this->$key;
+//         }
+//         error_log('asArray: ' . print_r($data, true));
+//         return $data;
     }
     public function toString() {
         return __CLASS__;

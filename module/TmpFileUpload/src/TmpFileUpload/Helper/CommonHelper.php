@@ -41,14 +41,24 @@ class CommonHelper {
 
     public static function getUploadMaxFilesize()
     {
-        $max_upload = CommonHelper::convertPHPSizeToBytes(ini_get('upload_max_filesize'));
-        $max_post = CommonHelper::convertPHPSizeToBytes(ini_get('post_max_size'));
-        $memory_limit = CommonHelper::convertPHPSizeToBytes(ini_get('memory_limit'));
+        $max_upload = CommonHelper::convertPHPSizeToBytes(
+            ini_get('upload_max_filesize'));
+        $max_post = CommonHelper::convertPHPSizeToBytes(
+            ini_get('post_max_size'));
+        $memory_limit = CommonHelper::convertPHPSizeToBytes(
+            ini_get('memory_limit'));
         return min($max_upload, $max_post, $memory_limit);
     }
 
-    public static function formatBytes($bytes, $precision = 2) {
-        $units = array('B', 'KB', 'MB', 'GB', 'TB');
+    public static function formatBytes($bytes, $precision = 2)
+    {
+        $units = array(
+            'B',
+            'KB',
+            'MB',
+            'GB',
+            'TB'
+        );
 
         $bytes = max($bytes, 0);
         $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
@@ -60,4 +70,5 @@ class CommonHelper {
 
         return round($bytes, $precision) . ' ' . $units[$pow];
     }
-};
+}
+;

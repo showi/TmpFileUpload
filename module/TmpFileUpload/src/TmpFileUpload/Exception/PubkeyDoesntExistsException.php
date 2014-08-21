@@ -12,4 +12,4 @@
 * See the GNU General Public License for more details.
 */
 namespace TmpFileUpload\Exception;
-class HashExistsException extends \ErrorException {}
+class PubkeyDoesntExistsException extends \ErrorException {}

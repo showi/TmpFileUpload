@@ -132,7 +132,7 @@ class UploadForm extends Form //implements ServiceLocatorAwareInterface
 			        'randomize'         => true,
                     //'max_size' => ini_get('post_max_size'), useless
 		  ));
-        $file->getFilterChain()->attach($tmpUploadFilter, 1);
+        $file->getFilterChain()->attach($tmpUploadFilter);
 		$inputFilter->add($file);
 //         $inputFilter->add(new MyFilter());
 // 		// Text Input

@@ -16,5 +16,9 @@
     <a href="<?php  echo $this->url('upload')?>">&laquo; Main</a>
 </div>
 
-<h2>File Upload Success</h2>
-<?php  \Zend\Debug\Debug::dump($this->formData); ?>
+<h2>Share</h2>
+<?php
+$pubkey = $this->formData['file-upload']['pubkey'];
+$link = "/upload/serve/$pubkey";
+?>
+Share: <a href="<?php echo $link; ?>"><?php echo $link; ?></a>

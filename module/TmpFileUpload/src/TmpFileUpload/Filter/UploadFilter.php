@@ -13,8 +13,8 @@ class UploadFilter extends RenameUpload {
     public function __construct($parent, $targetOrOptions)
     {
         $this->setParent($parent);
-        $this->options['hash'] = Null;
-        $this->options['max_size'] = Null;
+//         $this->options['hash'] = Null;
+//         $this->options['max_size'] = Null;
         parent::__construct($targetOrOptions);
     }
 
@@ -77,15 +77,17 @@ class UploadFilter extends RenameUpload {
             $value['hash'] = $this->getHash($value['tmp_name']);
             $value['pubkey'] = MyHelper::randomString(64);
             $value['valid_until'] = MyHelper::validUntil("+5M");
-            $value['path'] = $value['tmp_name'];
         }
         error_log('parent::Filter');
         $filter = parent::filter($value);
-        if (false === $filter) {
+        if ($filter === false) {
         	return false;
         }
-        error_log("File moved to finale destination");
         $value = $filter;
+        if (is_array($value)) {
+            $value['path'] = $value['tmp_name'];
+        }
+        error_log("File moved to finale destination: " . $value['path']);
         error_log(print_r($value, true));
         return $value;
     }
