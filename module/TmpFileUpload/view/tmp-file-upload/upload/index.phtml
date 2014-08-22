@@ -32,7 +32,6 @@ $errorsHelper
 ?>
 <?php  echo $this->form()->openTag($form); ?>
 <fieldset>
-    <legend><?php  echo ($this->legend) ?: 'Single File Upload' ?></legend>
     <?php
     $elem = $form->get('file-upload');
     $elem->setLabelAttributes(array('class' => 'control-label'));
@@ -62,7 +61,7 @@ $errorsHelper
 
     <div class="control-group">
         <div class="controls">
-            <button class="btn btn-primary">Submit</button>
+            <button class="btn btn-primary"><?php echo $this->translate('Submit')?></button>
         </div>
     </div>
 
