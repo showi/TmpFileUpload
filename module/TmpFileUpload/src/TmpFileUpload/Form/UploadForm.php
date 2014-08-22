@@ -32,6 +32,7 @@ class UploadForm extends Form
     protected $serviceLocator;
     protected $fileTable;
     protected $mimeTable;
+    protected $config;
 
 	public function __construct($serviceLocator, $name = null, $options = array())
 	{
@@ -49,6 +50,14 @@ class UploadForm extends Form
 	public function getServiceLocator()
 	{
 	    return $this->serviceLocator;
+	}
+
+	public function getConfig() {
+	    if (!is_null($this->config)) {
+	        return $this->config;
+	    }
+	    $this->config = $this->getServiceLocator()->get('config');
+	    return $this->config;
 	}
 
 	public function getFileTable()

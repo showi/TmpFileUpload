@@ -21,9 +21,7 @@ use TmpFileUpload\Exception as MyException;
 class UploadFilter extends RenameUpload {
 
     protected $parent = Null;
-
     protected $fileTable = Null;
-
     protected $mimeTable = Null;
 
     public function __construct($parent, $targetOrOptions)
@@ -127,8 +125,7 @@ class UploadFilter extends RenameUpload {
 
     protected function removeMeta($path) {
         error_log('Deleting meta from image: ' . $path);
-        $config = $this->parent->getServiceLocator()->get('config');
-        $binary = $config['bin_exiv2'];
+        $binary = $this->parent->getConfig()['bin_exiv2'];
         return MyHelper::removeMeta($binary, $path);
     }
 

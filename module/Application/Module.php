@@ -23,8 +23,9 @@ namespace Application;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use Zend\ModuleManager\Feature\LocatorRegisteredInterface;
 
-class Module
+class Module implements LocatorRegisteredInterface
 {
     public function onBootstrap(MvcEvent $e)
     {
@@ -33,15 +34,6 @@ class Module
         $eventManager        = $application->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
-//         $sharedManager = $application->getEventManager()->getSharedManager();
-//         $sharedManager->attach('Zend\Mvc\Application', 'dispatch.error',
-//             function($e) use ($sm) {
-//                 $sm->get('Zend\Log\Logger')->crit($e->getParam('exception'));
-//                 if ($e->getParam('exception')){
-//                     $sm->get('Zend\Log\Logger')->crit($e->getParam('exception'));
-//                 }
-//             }
-//         );
     }
 
     public function getConfig()

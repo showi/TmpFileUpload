@@ -12,12 +12,27 @@
 * See the GNU General Public License for more details.
 */
 return array(
+    'bin_exiv2' => '/usr/bin/exiv2',
+    'db' => array(
+        'driver' => 'Pdo',
+        'dsn' => 'mysql:dbname=tmpfileupload;host=localhost',
+        'driver_options' => array(
+            PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES \'UTF8\''
+        )
+    ),
+    'service_manager' => array(
+        'factories' => array(
+            'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory'
+        )
+    ),
+    'factories' => array(
+        'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',
+    ),
     'controllers' => array(
         'invokables' => array(
             'TmpFileUpload\Controller\Upload' => 'TmpFileUpload\Controller\UploadController'
         )
     ),
-    // The following section is new and should be added to your file
     'router' => array(
         'routes' => array(
             'tfu' => array(
