@@ -107,7 +107,7 @@ class UploadController extends AbstractActionController {
 
     protected function redirectToError($msg, $code) {
         //$this->sessionContainer->formData = $formData;
-        $response = $this->redirect()->toRoute('tfu/');
+        $response = $this->redirect()->toRoute('tfu');
         $response->setStatusCode(404);
         return $response;
     }
