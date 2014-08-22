@@ -29,9 +29,16 @@ class UploadFilter extends RenameUpload {
     public function __construct($parent, $targetOrOptions)
     {
         $this->setParent($parent);
+        $this->options['delete_meta'] = false;
         parent::__construct($targetOrOptions);
     }
 
+    public function setDeleteMeta($bool) {
+        $this->options['delete_meta'] = (bool) $bool;
+    }
+    public function getDeleteMeta() {
+        return $this->options['delete_meta'];
+    }
     public function setMaxSize($size)
     {
         error_log("Setting max_size: $size");
@@ -81,7 +88,6 @@ class UploadFilter extends RenameUpload {
 
     public function filter($value)
     {
-        error_log('Filtering...' . print_r($value, true));
         if (key_exists('max_size', $this->getOptions())) {
             $max_size = $this->getOptions()['max_size'];
             error_log("max_size: $max_size");
@@ -94,13 +100,20 @@ class UploadFilter extends RenameUpload {
         }
         $value['mime_id'] = $this->getMimeByName($value['type'])->id;
         $value['mime'] = $value['type'];
+        if (MyHelper::startsWith($value['mime'], 'image/')) {
+            if($this->getDeleteMeta()) {
+                if (!$this->removeMeta($value['tmp_name'])) {
+                    error_log('Cannot remove meta from image: '. $value['tmp_name']);
+                }
+            }
+        }
         if (isset($value['tmp_name']) &&
              ! isset($this->alreadyFiltered[$value['tmp_name']])) {
             $value['hash'] = $this->getHash($value['tmp_name']);
             $value['pubkey'] = MyHelper::randomString(64);
             $value['valid_until'] = MyHelper::validUntil("+5M");
         }
-        error_log('parent::Filter');
+
         $filter = parent::filter($value);
         if ($filter === false) {
             return false;
@@ -109,9 +122,14 @@ class UploadFilter extends RenameUpload {
         if (is_array($value)) {
             $value['path'] = $value['tmp_name'];
         }
-        error_log("File moved to finale destination: " . $value['path']);
-        error_log(print_r($value, true));
         return $value;
+    }
+
+    protected function removeMeta($path) {
+        error_log('Deleting meta from image: ' . $path);
+        $config = $this->parent->getServiceLocator()->get('config');
+        $binary = $config['bin_exiv2'];
+        return MyHelper::removeMeta($binary, $path);
     }
 
     protected function getMimeByName($mime)

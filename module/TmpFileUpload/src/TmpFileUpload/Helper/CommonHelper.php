@@ -13,6 +13,7 @@
 */
 
 namespace TmpFileUpload\Helper;
+use TmpFileUpload\Exception;
 
 class CommonHelper {
 
@@ -93,6 +94,19 @@ class CommonHelper {
     {
         return $needle === "" ||
              substr($haystack, - strlen($needle)) === $needle;
+    }
+
+    public static function removeMeta($binary, $path) {
+        if (!is_executable($binary)) {
+            throw new Exception\InvalidBinaryException($binary);
+        }
+        $return = null;
+        $cmd = escapeshellcmd("$binary rm $path");
+        system($cmd, $return);
+        if($return != 0) {
+        	return False;
+        }
+        return True;
     }
 }
 ;

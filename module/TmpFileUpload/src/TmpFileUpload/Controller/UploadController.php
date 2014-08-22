@@ -62,7 +62,6 @@ class UploadController extends AbstractActionController {
         } catch (Exception\HashExistsException $e) {
             $row = $this->getFileTable()->getHash($e->getMessage());
             $data = $row->getArrayCopy();
-            error_log('HASH EXISTS: ' . print_r($data, true));
             $data['mime'] = $this->getMimeTable()->getMime($row->mime_id)->value;
             return $this->redirectToSuccessPage($data);
         } catch (Exception\FileSizeMaxException $e) {

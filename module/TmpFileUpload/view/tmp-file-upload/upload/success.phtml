@@ -26,7 +26,10 @@ $mime = $this->formData['mime'];
 $is_image = Helper::startsWith($mime, 'image/') ? true : false;
 $img = '';
 if ($is_image) {
-    $img = '<img style="width: 50px;" src="/upload/serve/' . $pubkey .'">';
+    $img = '<img style="max-width:90%; max-height: 400px" src="/upload/serve/' . $pubkey .'">';
 }
 ?>
-<a href="<?php echo $link; ?>"><?php echo $img; ?>&nbsp;<?php echo $link; ?></a>
+<p><h3>Url:</h3><a href="<?php echo $link; ?>"><?php echo $link; ?></a></p>
+<p><h3>Image:</h3>
+<a href="<?php echo $link; ?>"><?php echo $img; ?></a>
+</p>

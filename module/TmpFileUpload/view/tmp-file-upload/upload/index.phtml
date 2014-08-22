@@ -17,23 +17,6 @@ $this->headTitle($title);
 use TmpFileUpload\Helper\CommonHelper as Helper;
 ?>
 <div>
-<?php if(!is_null($message)) :?>
-<div style="background-color: black; color: white">
-    <h4>Error</h4>
-    <p><?php echo $message ?></p>
-</div>
-<?php endif; ?>
-<p><h4>Max File Size:</h4>
-<ul>
-<li><?php echo Helper::formatBytes(Helper::getUploadMaxFilesize()); ?></li>
-</ul>
-<h4>Valid MIME</h4>
-<ul>
-<?php  foreach ($mimes as $mime) : ?>
-    <li><?php  echo $this->escapeHtml($mime->value);?></li>
-<?php  endforeach; ?>
-</ul>
-</p>
 <?php
 // Init Form
 $form = $this->form;
@@ -85,4 +68,22 @@ $errorsHelper
 
 </fieldset>
 <?php  echo $this->form()->closeTag($form); ?>
+<hr>
+<p><h5>Max File Size:</h5>
+<ul>
+<li><?php echo Helper::formatBytes(Helper::getUploadMaxFilesize()); ?></li>
+</ul>
+<h5>Valid MIME</h5>
+<ul>
+<?php  foreach ($mimes as $mime) : ?>
+    <li><?php  echo $this->escapeHtml($mime->value);?></li>
+<?php  endforeach; ?>
+</ul>
+<h5>Features</h5>
+<ul>
+<li>File deleted after 5 minutes</li>
+<li>Meta remove from image</li>
+<li>Random key for access</li>
+</ul>
+</p>
 </div>

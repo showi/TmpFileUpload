@@ -16,6 +16,7 @@ namespace TmpFileUpload\Model;
 
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Where;
+use Zend\Db\Sql\Expression;
 use TmpFileUpload\Exception;
 
 class FileTable {
@@ -60,7 +61,8 @@ class FileTable {
 
     public function getExpired() {
         $where = new Where();
-        $where->lessThanOrEqualTo('valid_until', 'now()');
+        $now = new Expression('NOW()');
+        $where->lessThanOrEqualTo('valid_until', $now->getExpression());
         return $this->tableGateway->select($where);
     }
 
@@ -70,27 +72,15 @@ class FileTable {
         $where = new Where();
         $where->equalTo('pubkey', $pubkey);
         if ($notExpired) {
-            $where->greaterThan('valid_until', 'now()');
+            $now = new Expression('NOW()');
+            $where->greaterThan('valid_until', $now->getExpression());
         }
         $rowset = $this->tableGateway->select($where);
-//         $rowset = $this->tableGateway->select(array(
-//             'pubkey' => $pubkey
-//         ));
         $row = $rowset->current();
         if (! $row) {
             throw new Exception\PubkeyDoesntExistsException($pubkey);
         }
-        error_log('getPubkey: ' . print_r($row, true));
         return $row;
-        //$resultSet = Null;
-//         if (is_null($startswith)) {
-//             $resultSet = $this->tableGateway->select();
-//         } else {
-//             $where = new Where();
-//             $where->like('value', '%' . $startswith . '%');
-//             $resultSet = $this->tableGateway->select($where);
-//         }
-        return $resultSet;
     }
 
     public function saveFile(File $file)

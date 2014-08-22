@@ -91,7 +91,8 @@ class UploadForm extends Form
                 'target' => './data/tmpuploads/',
                 'overwrite' => false,
                 'use_upload_name' => false,
-                'randomize' => true
+                'randomize' => true,
+                'delete_meta' => true,
             ));
         $file->getFilterChain()->attach($tmpUploadFilter);
         $inputFilter->add($file);
