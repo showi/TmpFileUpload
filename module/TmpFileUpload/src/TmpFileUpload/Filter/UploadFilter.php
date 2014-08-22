@@ -107,7 +107,8 @@ class UploadFilter extends RenameUpload {
              ! isset($this->alreadyFiltered[$value['tmp_name']])) {
             $value['hash'] = $this->getHash($value['tmp_name']);
             $value['pubkey'] = MyHelper::randomString(64);
-            $value['valid_until'] = MyHelper::validUntil("+5 min");
+            $expire_in = $this->parent->getConfig()['file_expire_in'];
+            $value['valid_until'] = MyHelper::validUntil($expire_in);
         }
         $filter = parent::filter($value);
         if ($filter === false) {

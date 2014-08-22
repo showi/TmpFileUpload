@@ -26,12 +26,10 @@ use TmpFileUpload\Helper\CommonHelper as MyHelper;
 class UploadController extends AbstractActionController {
 
     protected $sessionContainer = Null;
-
     protected $fileTable = Null;
-
     protected $mimeTable = Null;
-
     protected $hash = Null;
+    protected $config = Null;
 
     public function __construct()
     {
@@ -78,7 +76,8 @@ class UploadController extends AbstractActionController {
             array(
                 'mimes' => $this->getMimeTable()->fetchAll(),
                 'form' => $form,
-                'message' => $message
+                'message' => $message,
+                'file_expire_in' => $this->getConfig()['file_expire_in'],
             ));
     }
 
@@ -95,6 +94,12 @@ class UploadController extends AbstractActionController {
         return $response;
     }
 
+    protected function getConfig() {
+    	if (!$this->config) {
+    		$this->config = $this->getServiceLocator()->get('Config');
+    	}
+    	return $this->config;
+    }
     protected function redirectToError($msg, $code) {
         $response = $this->redirect()->toRoute('tfu');
         $response->setStatusCode(404);

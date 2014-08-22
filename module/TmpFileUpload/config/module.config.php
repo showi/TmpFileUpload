@@ -13,6 +13,7 @@
 */
 return array(
     'bin_exiv2' => '/usr/bin/exiv2',
+    'file_expire_in' => '+5 min',
     'db' => array(
         'driver' => 'Pdo',
         'dsn' => 'mysql:dbname=tmpfileupload;host=localhost',
