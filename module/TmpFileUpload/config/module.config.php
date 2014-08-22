@@ -42,7 +42,7 @@ return array(
                     'route' => '/tfu',
                     'defaults' => array(
                         'controller' => 'TmpFileUpload\Controller\Upload',
-                        'action' => 'index'
+                        'action' => 'upload'
                     )
                 ),
                 'may_terminate' => true,
@@ -54,6 +54,16 @@ return array(
                             'defaults' => array(
                                 'controller' => 'TmpFileUpload\Controller\Upload',
                                 'action' => 'success'
+                            )
+                        )
+                    ),
+                    'about' => array(
+                        'type' => 'Literal',
+                        'options' => array(
+                            'route' => '/about',
+                            'defaults' => array(
+                                'controller' => 'TmpFileUpload\Controller\Upload',
+                                'action' => 'about'
                             )
                         )
                     ),

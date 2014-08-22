@@ -1,38 +1,36 @@
 <?php
 /*
-* Copyright (c) 2014 Joachim Basmaison
-*
-* This program is free software; you can redistribute it and/or modify it
-* under the terms of the GNU General Public License as published by
-* the Free Software Foundation; either version 2 of the License,
-* or (at your option) any later version. This program is distributed in the
-* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
-* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-*
-* See the GNU General Public License for more details.
+Copyright (c) 2014 Joachim Basmaison
+
+This file is part of TmpFileUpload <https://github.com/showi/TmpFileUpload>
+
+TmpFileUpload is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+See the GNU General Public License for more details.
 */
 
 use TmpFileUpload\Helper\CommonHelper as Helper;
 ?>
 <div>
-    <a href="<?php  echo $this->url('tfu')?>">&laquo; Main</a>
+    <a href="<?php  echo $this->url('tfu')?>">&laquo; Back</a>
 </div>
-<hr>
 <div>
 <?php
 $pubkey = $this->formData['pubkey'];
-$link = "/tfu/serve/$pubkey";
+$url = $this->url('tfu/serve', array('pubkey' => $pubkey));
 $mime = $this->formData['mime'];
-$is_image = Helper::startsWith($mime, 'image/') ? true : false;
 $img = null;
-if ($is_image) {
-    $img = "<img style=\"max-width:90%; max-height: 400px\" src=\"$link\">";
+if (Helper::isImage($mime)) {
+    $img = "<img style=\"max-width:90%; max-height: 400px\" src=\"$url\">";
 }
 ?>
-<p>URL:<a href="<?php echo $link; ?>" target="_blank"><?php echo $link; ?></a></p>
+<p>URL:<a href="<?php echo $url; ?>" target="_blank"><?php echo $url; ?></a></p>
 <?php if(!is_null($img)) { ?>
 <p>
-<a href="<?php echo $link; ?>" target="_blank"><?php echo $img; ?></a>
+<a href="<?php echo $url; ?>" target="_blank"><?php echo $img; ?></a>
 <?php } else { ?>
 Mime: <?php echo $mime ?>
 <?php } ?>

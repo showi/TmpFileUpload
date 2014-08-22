@@ -1,15 +1,15 @@
 <?php
 /*
- * Copyright (c) 2014 Joachim Basmaison
-*
-* This program is free software; you can redistribute it and/or modify it
-* under the terms of the GNU General Public License as published by
-* the Free Software Foundation; either version 2 of the License,
-* or (at your option) any later version. This program is distributed in the
-* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
-* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-*
-* See the GNU General Public License for more details.
+Copyright (c) 2014 Joachim Basmaison
+
+This file is part of TmpFileUpload <https://github.com/showi/TmpFileUpload>
+
+TmpFileUpload is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+See the GNU General Public License for more details.
 */
 
 $title = 'TmpFileUpload';
@@ -31,6 +31,7 @@ $errorsHelper
     ->setMessageCloseString('</div>');
 ?>
 <?php  echo $this->form()->openTag($form); ?>
+<?php #echo $this->formFileSessionProgress(); // Must come before the file input! ?>
 <fieldset>
     <?php
     $elem = $form->get('file-upload');
@@ -67,22 +68,9 @@ $errorsHelper
 
 </fieldset>
 <?php  echo $this->form()->closeTag($form); ?>
-<hr>
-<p><h5>Max File Size:</h5>
-<ul>
-<li><?php echo Helper::formatBytes(Helper::getUploadMaxFilesize()); ?></li>
-</ul>
-<h5>Valid MIME</h5>
-<ul>
-<?php  foreach ($mimes as $mime) : ?>
-    <li><?php  echo $this->escapeHtml($mime->value);?></li>
-<?php  endforeach; ?>
-</ul>
-<h5>Features</h5>
-<ul>
-<li>File deleted after <?php echo $file_expire_in; ?></li>
-<li>Image Meta removed using <a href="www.exiv2.org/">exiv2</a></li>
-<li>Random key for file access</li>
-</ul>
-</p>
+<div id="progress" class="help-block">
+    <div class="progress progress-info progress-striped">
+        <div class="bar"></div>
+    </div>
+    <p></p>
 </div>

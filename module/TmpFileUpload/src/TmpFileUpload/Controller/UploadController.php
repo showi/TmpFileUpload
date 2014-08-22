@@ -1,15 +1,15 @@
 <?php
 /*
-* Copyright (c) 2014 Joachim Basmaison
-*
-* This program is free software; you can redistribute it and/or modify it
-* under the terms of the GNU General Public License as published by
-* the Free Software Foundation; either version 2 of the License,
-* or (at your option) any later version. This program is distributed in the
-* hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
-* implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-*
-* See the GNU General Public License for more details.
+Copyright (c) 2014 Joachim Basmaison
+
+This file is part of TmpFileUpload <https://github.com/showi/TmpFileUpload>
+
+TmpFileUpload is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+See the GNU General Public License for more details.
 */
 
 namespace TmpFileUpload\Controller;
@@ -41,7 +41,7 @@ class UploadController extends AbstractActionController {
         $this->sessionContainer = Null;
     }
 
-    public function indexAction()
+    public function uploadAction()
     {
         try {
             $form = new UploadForm($this->getServiceLocator(), 'file-form');
@@ -58,14 +58,16 @@ class UploadController extends AbstractActionController {
                     $tbl = $this->getFileTable();
                     $tbl->saveFile($file);
                     $data = $file->getArrayCopy();
-                    $data['mime'] = $this->getMimeTable()->getMime($data['mime_id'])->value;
+                    $data['mime'] = $this->getMimeTable()
+                                         ->getMime($data['mime_id'])->value;
                     return $this->redirectToSuccessPage($data);
                 }
             }
         } catch (Exception\HashExistsException $e) {
             $row = $this->getFileTable()->getHash($e->getMessage());
             $data = $row->getArrayCopy();
-            $data['mime'] = $this->getMimeTable()->getMime($row->mime_id)->value;
+            $data['mime'] = $this->getMimeTable
+                                 ->getMime($row->mime_id)->value;
             return $this->redirectToSuccessPage($data);
         } catch (Exception\FileSizeMaxException $e) {
             return $this->redirectToIndex(
@@ -77,6 +79,14 @@ class UploadController extends AbstractActionController {
                 'mimes' => $this->getMimeTable()->fetchAll(),
                 'form' => $form,
                 'message' => $message,
+                'file_expire_in' => $this->getConfig()['file_expire_in'],
+            ));
+    }
+
+    public function aboutAction() {
+        return new ViewModel(
+            array(
+                'mimes' => $this->getMimeTable()->fetchAll(),
                 'file_expire_in' => $this->getConfig()['file_expire_in'],
             ));
     }
@@ -134,9 +144,10 @@ class UploadController extends AbstractActionController {
     {
         $this->deleteExpired();
         $pubkey = $this->params()->fromRoute('pubkey');
-        $file = $this->getFileTable()->getPubkey($pubkey, true);
-        if (! $file) {
-            throw new Exception\PubkeyDoesntExistsException($pubkey);
+        try {
+            $file = $this->getFileTable()->getPubkey($pubkey, true);
+        } catch(Exception\PubkeyDoesntExistsException $e) {
+            return $this->notFoundAction();
         }
         $file->mime = $this->getMimeTable()->getMime($file->mime_id)->value;
         $response = $this->getResponse();
@@ -184,4 +195,12 @@ class UploadController extends AbstractActionController {
         }
         return $this->mimeTable;
     }
+
+    public function uploadProgressAction()
+    {
+        $id = $this->params()->fromQuery('id', null);
+        $progress = new \Zend\ProgressBar\Upload\SessionProgress();
+        return new \Zend\View\Model\JsonModel($progress->getProgress($id));
+    }
+
 }

@@ -1,0 +1,45 @@
+<?php
+/*
+Copyright (c) 2014 Joachim Basmaison
+
+This file is part of TmpFileUpload <https://github.com/showi/TmpFileUpload>
+
+TmpFileUpload is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+See the GNU General Public License for more details.
+*/
+
+$title = 'TmpFileUpload';
+$this->headTitle($title);
+use TmpFileUpload\Helper\CommonHelper as Helper;
+?>
+<div>
+    <a href="<?php  echo $this->url('tfu')?>">&laquo; <?php echo $this->translate('Main'); ?></a>
+</div>
+<hr>
+<p>
+<h5>Max File Size:</h5>
+    <ul>
+    <li><?php echo Helper::formatBytes(Helper::getUploadMaxFilesize()); ?></li>
+    </ul>
+<h5>Valid MIME</h5>
+    <ul>
+    <?php  foreach ($mimes as $mime) : ?>
+        <li><?php  echo $this->escapeHtml($mime->value);?></li>
+    <?php  endforeach; ?>
+    </ul>
+<h5>Features</h5>
+    <ul>
+        <li>File deleted after <?php echo $file_expire_in; ?></li>
+        <li>Image Meta removed using <a href="www.exiv2.org/">exiv2</a></li>
+        <li>Random key for file access</li>
+    </ul>
+<h5>Source</h5>
+    <ul>
+        <li><a href="https://github.com/showi/TmpFileUpload">https://github.com/showi/TmpFileUpload</a></li>
+    </ul>
+</p>
+</div>
