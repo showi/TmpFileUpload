@@ -73,8 +73,8 @@ class FileTable {
         $where = new Where();
         $where->equalTo('pubkey', $pubkey);
         if ($notExpired) {
-            $now = new Expression('NOW()');
-            $where->greaterThanOrEqualTo('valid_until', $now->getExpression());
+            $now = date('Y-m-d H:i:s', strtotime("now"));
+            $where->greaterThanOrEqualTo('valid_until', $now);
         }
         $rowset = $this->tableGateway->select($where);
         $row = $rowset->current();

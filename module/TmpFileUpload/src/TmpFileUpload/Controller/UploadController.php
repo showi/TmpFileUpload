@@ -139,11 +139,13 @@ class UploadController extends AbstractActionController {
 
     public function serveAction()
     {
-        try {
+        error_log('Serve ACTION');
+//         try {
             $this->deleteExpired();
             $pubkey = $this->params()->fromRoute('pubkey');
             $file = $this->getFileTable()->getPubkey($pubkey, true);
-            if (! $file) {
+            error_log('File: ' . print_r($file, true));
+            if (!$file) {
                 throw new Exception\PubkeyDoesntExistsException($pubkey);
             }
             $file->mime = $this->getMimeTable()->getMime($file->mime_id)->value;
@@ -155,9 +157,9 @@ class UploadController extends AbstractActionController {
             ob_clean();
             $response->setContent(file_get_contents($file->path));
             return $response;
-        }  catch(Exception\PubkeyDoesntExistsException $e) {
-            return $this->redirectToError('File not Found', 404);
-        }
+//         }  catch(Exception\PubkeyDoesntExistsException $e) {
+//             return $this->redirectToError('File not Found', 404);
+//         }
     }
 
     public function successAction()
