@@ -63,7 +63,7 @@ class FileTable {
         $where = new Where();
         $now =  date('Y-m-d H:i:s', strtotime("now"));
         error_log('NOW: ' . $now);
-        $where->lessThanOrEqualTo('valid_until', $now);
+        $where->greaterThanOrEqualTo('valid_until', $now);
         return $this->tableGateway->select($where);
     }
 
