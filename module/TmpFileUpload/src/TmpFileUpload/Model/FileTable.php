@@ -63,7 +63,7 @@ class FileTable {
         $where = new Where();
         $now =  date('Y-m-d H:i:s', strtotime("now"));
         error_log('NOW: ' . $now);
-        $where->greaterThanOrEqualTo('valid_until', $now);
+        $where->lessThan('valid_until', $now);
         return $this->tableGateway->select($where);
     }
 
@@ -74,7 +74,7 @@ class FileTable {
         $where->equalTo('pubkey', $pubkey);
         if ($notExpired) {
             $now = new Expression('NOW()');
-            $where->greaterThan('valid_until', $now->getExpression());
+            $where->greaterThanOrEqualTo('valid_until', $now->getExpression());
         }
         $rowset = $this->tableGateway->select($where);
         $row = $rowset->current();
