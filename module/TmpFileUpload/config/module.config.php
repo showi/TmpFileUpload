@@ -45,15 +45,12 @@ return array(
                         'type' => 'segment',
                         'options' => array(
                             'route' => '/serve[/:pubkey]',
-                            //'route'    => '/album[/:action][/:id]',
                             'constraints' => array(
-                              //  'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                                 'pubkey'     => '[a-zA-Z0-9]+',
                             ),
                             'defaults' => array(
                                 'controller' => 'TmpFileUpload\Controller\Upload',
                                 'action' => 'serve'
-
                             )
                         )
                     )
