@@ -32,7 +32,7 @@ DROP TABLE IF EXISTS `file`;
 CREATE TABLE IF NOT EXISTS `file` (
 `id` int(11) NOT NULL,
   `pubkey` varchar(128) NOT NULL,
-  `valid_until` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `valid_until` datetime NOT NULL DEFAULT '0000-00-00',
   `hash` varchar(128) NOT NULL,
   `mime_id` int(11) NOT NULL,
   `path` varchar(1024) NOT NULL
