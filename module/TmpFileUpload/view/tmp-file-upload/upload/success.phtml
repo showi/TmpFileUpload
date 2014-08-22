@@ -20,7 +20,6 @@ use TmpFileUpload\Helper\CommonHelper as Helper;
 <hr>
 <div>
 <?php
-error_log('formData: ' . print_r($this->formData, true));
 $pubkey = $this->formData['pubkey'];
 $link = "/tfu/serve/$pubkey";
 $mime = $this->formData['mime'];

@@ -62,7 +62,6 @@ class FileTable {
     public function getExpired() {
         $where = new Where();
         $now =  date('Y-m-d H:i:s', strtotime("now"));
-        error_log('NOW: ' . $now);
         $where->lessThan('valid_until', $now);
         return $this->tableGateway->select($where);
     }
@@ -85,7 +84,6 @@ class FileTable {
 
     public function saveFile(File $file)
     {
-        error_log($file->toString());
         $id = (int) $file->id;
         if ($id == 0) {
             $this->tableGateway->insert($file->getArrayCopy());

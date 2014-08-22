@@ -106,7 +106,6 @@ class UploadController extends AbstractActionController {
         $rs = $tbl->getExpired();
         $return = true;
         foreach($rs as $file) {
-            error_log($file->toString());
             if (file_exists($file->path)){
                 if(!unlink($file->path)) {
                     error_log('Cannot unlink file: ' . $file->path);
@@ -131,7 +130,6 @@ class UploadController extends AbstractActionController {
         $this->deleteExpired();
         $pubkey = $this->params()->fromRoute('pubkey');
         $file = $this->getFileTable()->getPubkey($pubkey, true);
-        error_log('File: ' . print_r($file, true));
         if (! $file) {
             throw new Exception\PubkeyDoesntExistsException($pubkey);
         }

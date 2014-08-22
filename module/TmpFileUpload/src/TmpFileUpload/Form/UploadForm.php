@@ -53,10 +53,9 @@ class UploadForm extends Form
 	}
 
 	public function getConfig() {
-	    if (!is_null($this->config)) {
-	        return $this->config;
+	    if (!$this->config) {
+	        $this->config = $this->getServiceLocator()->get('config');
 	    }
-	    $this->config = $this->getServiceLocator()->get('config');
 	    return $this->config;
 	}
 

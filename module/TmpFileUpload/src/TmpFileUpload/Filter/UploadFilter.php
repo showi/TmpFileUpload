@@ -39,7 +39,6 @@ class UploadFilter extends RenameUpload {
     }
     public function setMaxSize($size)
     {
-        error_log("Setting max_size: $size");
         $this->options['max_size'] = MyHelper::convertPHPSizeToBytes($size);
         return $this;
     }
@@ -69,7 +68,6 @@ class UploadFilter extends RenameUpload {
 
     public function setParent($parent)
     {
-        error_log('Setting parent: ' .\spl_object_hash($parent));
         $this->parent = $parent;
         if (is_null($parent)) {
             return;
@@ -88,9 +86,7 @@ class UploadFilter extends RenameUpload {
     {
         if (key_exists('max_size', $this->getOptions())) {
             $max_size = $this->getOptions()['max_size'];
-            error_log("max_size: $max_size");
             if ($max_size > 0) {
-                error_log('Checking size');
                 if ($max_size <= (int) $value['size']) {
                     throw new MyException\FileSizeMaxException($value['size']);
                 }
@@ -101,7 +97,9 @@ class UploadFilter extends RenameUpload {
         if (MyHelper::startsWith($value['mime'], 'image/')) {
             if($this->getDeleteMeta()) {
                 if (!$this->removeMeta($value['tmp_name'])) {
-                    error_log('Cannot remove meta from image: '. $value['tmp_name']);
+                    error_log('Cannot remove meta from image: ' .
+                        $value['tmp_name']);
+                    return false;
                 }
             }
         }
@@ -110,7 +108,6 @@ class UploadFilter extends RenameUpload {
             $value['hash'] = $this->getHash($value['tmp_name']);
             $value['pubkey'] = MyHelper::randomString(64);
             $value['valid_until'] = MyHelper::validUntil("+5 min");
-            error_log("ValidUntil: " . $value['valid_until']);
         }
         $filter = parent::filter($value);
         if ($filter === false) {
@@ -124,7 +121,6 @@ class UploadFilter extends RenameUpload {
     }
 
     protected function removeMeta($path) {
-        error_log('Deleting meta from image: ' . $path);
         $binary = $this->parent->getConfig()['bin_exiv2'];
         return MyHelper::removeMeta($binary, $path);
     }
@@ -147,7 +143,6 @@ class UploadFilter extends RenameUpload {
         } catch (MyException\HashDoesntExistsException $e) {
             return\hash_file('sha256', $path, false);
         }
-        error_log('File exists? ' . (file_exists($path) ? 'Yes' : 'No'));
         throw new MyException\HashExistsException($hash);
     }
 }
