@@ -84,18 +84,8 @@ class UploadController extends AbstractActionController {
 
     protected function redirectToIndex($message = null)
     {
-//         if (! is_null($message)) {
-//             $this->sessionContainer->message = $message;
-//         }
         return $this->redirect()->toRoute('tfu');
     }
-
-//     protected function redirectToLink($pubkey)
-//     {
-//         $this->sessionContainer->pubkey = $pubkey;
-//         error_log("Redirect to pubkey: $pubkey");
-//         return $this->redirect()->toRoute('upload/success');
-//     }
 
     protected function redirectToSuccessPage($formData = null)
     {
@@ -106,7 +96,6 @@ class UploadController extends AbstractActionController {
     }
 
     protected function redirectToError($msg, $code) {
-        //$this->sessionContainer->formData = $formData;
         $response = $this->redirect()->toRoute('tfu');
         $response->setStatusCode(404);
         return $response;
@@ -139,27 +128,22 @@ class UploadController extends AbstractActionController {
 
     public function serveAction()
     {
-        error_log('Serve ACTION');
-//         try {
-            $this->deleteExpired();
-            $pubkey = $this->params()->fromRoute('pubkey');
-            $file = $this->getFileTable()->getPubkey($pubkey, true);
-            error_log('File: ' . print_r($file, true));
-            if (!$file) {
-                throw new Exception\PubkeyDoesntExistsException($pubkey);
-            }
-            $file->mime = $this->getMimeTable()->getMime($file->mime_id)->value;
-            $response = $this->getResponse();
-            $response->getHeaders()
-                ->addHeaderLine('Content-Type', $file->mime)
-                ->addHeaderLine('Content-Transfer-Encoding', 'binary')
-                ->addHeaderLine('Content-Length', filesize($file->path));
-            ob_clean();
-            $response->setContent(file_get_contents($file->path));
-            return $response;
-//         }  catch(Exception\PubkeyDoesntExistsException $e) {
-//             return $this->redirectToError('File not Found', 404);
-//         }
+        $this->deleteExpired();
+        $pubkey = $this->params()->fromRoute('pubkey');
+        $file = $this->getFileTable()->getPubkey($pubkey, true);
+        error_log('File: ' . print_r($file, true));
+        if (! $file) {
+            throw new Exception\PubkeyDoesntExistsException($pubkey);
+        }
+        $file->mime = $this->getMimeTable()->getMime($file->mime_id)->value;
+        $response = $this->getResponse();
+        $response->getHeaders()
+            ->addHeaderLine('Content-Type', $file->mime)
+            ->addHeaderLine('Content-Transfer-Encoding', 'binary')
+            ->addHeaderLine('Content-Length', filesize($file->path));
+        ob_clean();
+        $response->setContent(file_get_contents($file->path));
+        return $response;
     }
 
     public function successAction()
@@ -170,7 +154,6 @@ class UploadController extends AbstractActionController {
         $data = array(
             'formData' => $this->sessionContainer->formData
         );
-//         $this->destroySession();
         return $data;
     }
 

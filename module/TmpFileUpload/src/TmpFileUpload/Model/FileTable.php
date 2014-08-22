@@ -69,7 +69,6 @@ class FileTable {
 
     public function getPubkey($pubkey, $notExpired=true)
     {
-
         $where = new Where();
         $where->equalTo('pubkey', $pubkey);
         if ($notExpired) {

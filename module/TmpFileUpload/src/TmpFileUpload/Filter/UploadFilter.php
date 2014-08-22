@@ -114,7 +114,6 @@ class UploadFilter extends RenameUpload {
             $value['valid_until'] = MyHelper::validUntil("+5 min");
             error_log("ValidUntil: " . $value['valid_until']);
         }
-
         $filter = parent::filter($value);
         if ($filter === false) {
             return false;
