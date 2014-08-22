@@ -107,7 +107,7 @@ class UploadController extends AbstractActionController {
 
     protected function redirectToError($msg, $code) {
         //$this->sessionContainer->formData = $formData;
-        $response = $this->redirect()->toRoute('tfu/' );
+        $response = $this->redirect()->toRoute('tfu/');
         $response->setStatusCode(404);
         return $response;
     }
@@ -131,7 +131,7 @@ class UploadController extends AbstractActionController {
                 error_log('Cannot remove file from database: ' . $file->path);
                 $return = false;
             } else {
-            	error_log('Database row deleted: ' . $file->path);
+                error_log('Database row deleted: ' . $file->path);
             }
         }
         return $return;
@@ -140,21 +140,21 @@ class UploadController extends AbstractActionController {
     public function serveAction()
     {
         try {
-        $this->deleteExpired();
-        $pubkey = $this->params()->fromRoute('pubkey');
-        $file = $this->getFileTable()->getPubkey($pubkey, true);
-        if (! $file) {
-            throw new Exception\PubkeyDoesntExistsException($pubkey);
-        }
-        $file->mime = $this->getMimeTable()->getMime($file->mime_id)->value;
-        $response = $this->getResponse();
-        $response->getHeaders()
-            ->addHeaderLine('Content-Type', $file->mime)
-            ->addHeaderLine('Content-Transfer-Encoding', 'binary')
-            ->addHeaderLine('Content-Length', filesize($file->path));
-        ob_clean();
-        $response->setContent(file_get_contents($file->path));
-        return $response;
+            $this->deleteExpired();
+            $pubkey = $this->params()->fromRoute('pubkey');
+            $file = $this->getFileTable()->getPubkey($pubkey, true);
+            if (! $file) {
+                throw new Exception\PubkeyDoesntExistsException($pubkey);
+            }
+            $file->mime = $this->getMimeTable()->getMime($file->mime_id)->value;
+            $response = $this->getResponse();
+            $response->getHeaders()
+                ->addHeaderLine('Content-Type', $file->mime)
+                ->addHeaderLine('Content-Transfer-Encoding', 'binary')
+                ->addHeaderLine('Content-Length', filesize($file->path));
+            ob_clean();
+            $response->setContent(file_get_contents($file->path));
+            return $response;
         }  catch(Exception\PubkeyDoesntExistsException $e) {
             return $this->redirectToError('File not Found', 404);
         }
