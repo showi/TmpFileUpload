@@ -38,6 +38,11 @@ class UploadController extends AbstractActionController {
         $this->sessionContainer = new Container('file_upload');
     }
 
+    private function destroySession() {
+        $this->sessionContainer->getManager()->getStorage()->clear();
+        $this->sessionContainer = Null;
+    }
+
     public function indexAction()
     {
         try {
@@ -79,10 +84,10 @@ class UploadController extends AbstractActionController {
 
     protected function redirectToIndex($message = null)
     {
-        if (! is_null($message)) {
-            $this->sessionContainer->message = $message;
-        }
-        return $this->redirect()->toRoute('upload');
+//         if (! is_null($message)) {
+//             $this->sessionContainer->message = $message;
+//         }
+        return $this->redirect()->toRoute('tfu');
     }
 
 //     protected function redirectToLink($pubkey)
@@ -95,8 +100,15 @@ class UploadController extends AbstractActionController {
     protected function redirectToSuccessPage($formData = null)
     {
         $this->sessionContainer->formData = $formData;
-        $response = $this->redirect()->toRoute('upload/success');
+        $response = $this->redirect()->toRoute('tfu/success');
         $response->setStatusCode(303);
+        return $response;
+    }
+
+    protected function redirectToError($msg, $code) {
+        //$this->sessionContainer->formData = $formData;
+        $response = $this->redirect()->toRoute('tfu/error/');
+        $response->setStatusCode(404);
         return $response;
     }
 
@@ -127,6 +139,7 @@ class UploadController extends AbstractActionController {
 
     public function serveAction()
     {
+        try {
         $this->deleteExpired();
         $pubkey = $this->params()->fromRoute('pubkey');
         $file = $this->getFileTable()->getPubkey($pubkey, true);
@@ -142,13 +155,21 @@ class UploadController extends AbstractActionController {
         ob_clean();
         $response->setContent(file_get_contents($file->path));
         return $response;
+        }  catch(Exception\PubkeyDoesntExistsException $e) {
+            return $this->redirectToError('File not Found', 404);
+        }
     }
 
     public function successAction()
     {
-        return array(
+        if (is_null($this->sessionContainer)) {
+            return $this->redirectToIndex();
+        }
+        $data = array(
             'formData' => $this->sessionContainer->formData
         );
+//         $this->destroySession();
+        return $data;
     }
 
     public function infoAction()

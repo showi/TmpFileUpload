@@ -20,10 +20,10 @@ return array(
     // The following section is new and should be added to your file
     'router' => array(
         'routes' => array(
-            'upload' => array(
+            'tfu' => array(
                 'type' => 'Literal',
                 'options' => array(
-                    'route' => '/upload',
+                    'route' => '/tfu',
                     'defaults' => array(
                         'controller' => 'TmpFileUpload\Controller\Upload',
                         'action' => 'index'

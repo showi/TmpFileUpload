@@ -15,25 +15,27 @@
 use TmpFileUpload\Helper\CommonHelper as Helper;
 ?>
 <div>
-    <a href="<?php  echo $this->url('upload')?>">&laquo; Main</a>
+    <a href="<?php  echo $this->url('tfu')?>">&laquo; Main</a>
 </div>
-<h2>Share</h2>
+<hr>
+<div>
 <?php
 error_log('formData: ' . print_r($this->formData, true));
 $pubkey = $this->formData['pubkey'];
-$link = "/upload/serve/$pubkey";
+$link = "/tfu/serve/$pubkey";
 $mime = $this->formData['mime'];
 $is_image = Helper::startsWith($mime, 'image/') ? true : false;
 $img = null;
 if ($is_image) {
-    $img = '<img style="max-width:90%; max-height: 400px" src="/upload/serve/' . $pubkey .'">';
+    $img = "<img style=\"max-width:90%; max-height: 400px\" src=\"$link\">";
 }
 ?>
-<p>URL:<a href="<?php echo $link; ?>"><?php echo $link; ?></a></p>
+<p>URL:<a href="<?php echo $link; ?>" target="_blank"><?php echo $link; ?></a></p>
 <?php if(!is_null($img)) { ?>
-<p><h3>Image:</h3>
-<a href="<?php echo $link; ?>"><?php echo $img; ?></a>
+<p>
+<a href="<?php echo $link; ?>" target="_blank"><?php echo $img; ?></a>
 <?php } else { ?>
 Mime: <?php echo $mime ?>
 <?php } ?>
 </p>
+</div>
