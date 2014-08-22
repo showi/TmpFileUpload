@@ -55,7 +55,7 @@ class UploadController extends AbstractActionController {
                     $tbl = $this->getFileTable();
                     $tbl->saveFile($file);
                     $data = $file->getArrayCopy();
-                    $data['mime'] = $this->mimeTable->getMime($data['mime_id']).value;
+                    $data['mime'] = $this->getMimeTable()->getMime($data['mime_id'])->value;
                     return $this->redirectToSuccessPage($data);
                 }
             }
@@ -95,17 +95,42 @@ class UploadController extends AbstractActionController {
 
     protected function redirectToSuccessPage($formData = null)
     {
-        error_log('LOG: ' . print_r($formData, true));
         $this->sessionContainer->formData = $formData;
         $response = $this->redirect()->toRoute('upload/success');
         $response->setStatusCode(303);
         return $response;
     }
 
+    protected function deleteExpired() {
+        $tbl = $this->getFileTable();
+        $rs = $tbl->getExpired();
+        $return = true;
+        foreach($rs as $file) {
+            error_log($file->toString());
+            if (file_exists($file->path)){
+                if(!unlink($file->path)) {
+                    error_log('Cannot unlink file: ' . $file->path);
+                    $return = false;
+                    continue;
+                } else {
+                    error_log('File unlinked: ' . $file->path);
+                }
+            }
+            if (!$tbl->deleteFile($file->id)) {
+                error_log('Cannot remove file from database: ' . $file->path);
+                $return = false;
+            } else {
+            	error_log('Database row deleted: ' . $file->path);
+            }
+        }
+        return $return;
+    }
+
     public function serveAction()
     {
+        $this->deleteExpired();
         $pubkey = $this->params()->fromRoute('pubkey');
-        $file = $this->getFileTable()->getPubkey($pubkey);
+        $file = $this->getFileTable()->getPubkey($pubkey, true);
         if (! $file) {
             throw new Exception\PubkeyDoesntExistsException($pubkey);
         }

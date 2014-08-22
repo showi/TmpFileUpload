@@ -15,6 +15,7 @@
 namespace TmpFileUpload\Model;
 
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\Sql\Where;
 use TmpFileUpload\Exception;
 
 class FileTable {
@@ -57,17 +58,39 @@ class FileTable {
         return $row;
     }
 
-    public function getPubkey($pubkey)
+    public function getExpired() {
+        $where = new Where();
+        $where->lessThanOrEqualTo('valid_until', 'now()');
+        return $this->tableGateway->select($where);
+    }
+
+    public function getPubkey($pubkey, $notExpired=true)
     {
-        $rowset = $this->tableGateway->select(array(
-            'pubkey' => $pubkey
-        ));
+
+        $where = new Where();
+        $where->equalTo('pubkey', $pubkey);
+        if ($notExpired) {
+            $where->greaterThan('valid_until', 'now()');
+        }
+        $rowset = $this->tableGateway->select($where);
+//         $rowset = $this->tableGateway->select(array(
+//             'pubkey' => $pubkey
+//         ));
         $row = $rowset->current();
         if (! $row) {
             throw new Exception\PubkeyDoesntExistsException($pubkey);
         }
         error_log('getPubkey: ' . print_r($row, true));
         return $row;
+        //$resultSet = Null;
+//         if (is_null($startswith)) {
+//             $resultSet = $this->tableGateway->select();
+//         } else {
+//             $where = new Where();
+//             $where->like('value', '%' . $startswith . '%');
+//             $resultSet = $this->tableGateway->select($where);
+//         }
+        return $resultSet;
     }
 
     public function saveFile(File $file)
@@ -75,7 +98,7 @@ class FileTable {
         error_log($file->toString());
         $id = (int) $file->id;
         if ($id == 0) {
-            $this->tableGateway->insert($file->asArray());
+            $this->tableGateway->insert($file->getArrayCopy());
         } else {
             if ($this->getFile($id)) {
                 $this->tableGateway->update($data, array(
@@ -89,6 +112,6 @@ class FileTable {
 
     public function deleteFile($id)
     {
-        $this->tableGateway->delete(array('id' => $id));
+        return $this->tableGateway->delete(array('id' => $id));
     }
 }

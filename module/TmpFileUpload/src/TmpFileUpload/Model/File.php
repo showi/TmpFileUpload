@@ -204,6 +204,11 @@ class File implements InputFilterAwareInterface
 
     public function toString()
     {
-        return __CLASS__;
+        $s = '[' + __CLASS__ + ' ';
+        foreach($this->_fields_name as $idx => $key) {
+            $s.= "$key: " . $this->$key . ', ';
+        }
+        $s.= ']';
+        return $s;
     }
 }
