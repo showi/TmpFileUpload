@@ -24,12 +24,16 @@ $pubkey = $this->formData['pubkey'];
 $link = "/upload/serve/$pubkey";
 $mime = $this->formData['mime'];
 $is_image = Helper::startsWith($mime, 'image/') ? true : false;
-$img = '';
+$img = null;
 if ($is_image) {
     $img = '<img style="max-width:90%; max-height: 400px" src="/upload/serve/' . $pubkey .'">';
 }
 ?>
-<p><h3>Url:</h3><a href="<?php echo $link; ?>"><?php echo $link; ?></a></p>
+<p>URL:<a href="<?php echo $link; ?>"><?php echo $link; ?></a></p>
+<?php if(!is_null($img)) { ?>
 <p><h3>Image:</h3>
 <a href="<?php echo $link; ?>"><?php echo $img; ?></a>
+<?php } else { ?>
+Mime: <?php echo $mime ?>
+<?php } ?>
 </p>

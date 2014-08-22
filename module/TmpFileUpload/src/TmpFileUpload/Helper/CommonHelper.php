@@ -46,10 +46,11 @@ class CommonHelper {
         return bin2hex($bytes);
     }
 
-    public static function validUntil($expire_in)
+    public static function validUntil($delta = '+0min')
     {
-        $datetime = new \DateTime('now');
-        $datetime->modify($expire_in);
+        $datetime = new \DateTime('NOW');
+        $datetime->modify($delta);
+//         return date('Y-m-d H:i:s', strtotime($expire_in));
         return $datetime->format('Y-m-d H:i:s');
     }
 

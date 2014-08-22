@@ -61,8 +61,9 @@ class FileTable {
 
     public function getExpired() {
         $where = new Where();
-        $now = new Expression('NOW()');
-        $where->lessThanOrEqualTo('valid_until', $now->getExpression());
+        $now =  date('Y-m-d H:i:s', strtotime("now"));
+        error_log('NOW: ' . $now);
+        $where->lessThanOrEqualTo('valid_until', $now);
         return $this->tableGateway->select($where);
     }
 
