@@ -14,6 +14,7 @@
 return array(
     'bin_exiv2' => '/usr/bin/exiv2',
     'bin_crontab' => '/usr/bin/crontab',
+    'bin_php' => '/usr/bin/php',
     'file_expire_in' => '+5 min',
     'db' => array(
         'driver' => 'Pdo',
@@ -101,7 +102,7 @@ return array(
             'routes' => array(
                 'cron-executable' => array(
                     'options' => array(
-                         'route'    => 'cron [install]',
+                         'route'    => 'cron [install] [remove]',
                          'defaults' => array(
                                 'controller' => 'TmpFileUpload\Controller\Cron',
                                 'action'     => 'entry'

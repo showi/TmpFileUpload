@@ -8,6 +8,7 @@ use Zend\Math\Rand;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 
 use TmpFileUpload\Helper\CommonHelper as Helper;
+use TmpFileUpload\Exception;
 
 $VERSION = "0.0.1";
 
@@ -20,8 +21,26 @@ class CronController extends AbstractActionController
 {
     private $VERSION = "0.0.1";
     protected $config;
+    protected $bin_php;
+    protected $bin_crontab;
 
     public function __construct() {
+        ;
+    }
+
+    protected function init() {
+        if (!$this->bin_crontab)
+            $this->bin_crontab = $this->getBinary('bin_crontab');
+        if (!$this->bin_php)
+            $this->bin_php = $this->getBinary('bin_php');
+    }
+
+    public function getBinary($name) {
+        $path = $this->getConfig()[$name];
+        if (!is_executable($path)) {
+            throw new Exception\InvalidBinaryException($path);
+        }
+        return $path;
     }
 
     public function getConfig() {
@@ -30,6 +49,7 @@ class CronController extends AbstractActionController
         }
         return $this->config;
     }
+
     public function getFileTable() {
         if (!$this->fileTable) {
         	$this->fileTable = Helper::getFileTable($this->getServiceLocator());
@@ -42,13 +62,16 @@ class CronController extends AbstractActionController
     }
 
     public function genCronLine() {
-        $path = '*/5 * * * * ' . realpath('public/') . '/index.php cron';
-        l("Path: $path");
+        $bin = $this->bin_php;
+        if (!is_executable($bin)){
+            throw new Exception\InvalidBinaryException($bin);
+        }
+        $path = '*/5 * * * * ' . $bin . ' ' . realpath('public/') . '/index.php cron';
         return $path;
     }
 
     public function installCron() {
-        $bin = $this->getConfig()['bin_crontab'];
+        $bin = $this->bin_crontab;
         $tmp = tmpfile();
         $meta = stream_get_meta_data($tmp);
         $fn = $meta['uri'];
@@ -63,16 +86,12 @@ class CronController extends AbstractActionController
         l('[+] >> Cron installed');
         return true;
     }
+
     public function isCronInstalled() {
-        $bin = $this->getConfig()['bin_crontab'];
-        if (!is_executable($bin)) {
-            l('Cron is not executable, ' . $bin);
-        }
+        $bin = $this->bin_crontab;
         $gencronline = trim($this->genCronLine());
-        l('Gine: ' . $gencronline);
         $return = null;
         exec("$bin -l", $result, $return);
-        l("Return: " . print_r($return, true));
         if ($return != 0) {
             l('Cannot execute crontab');
             return false;
@@ -83,7 +102,6 @@ class CronController extends AbstractActionController
         }
         foreach($result as $line) {
             $line = trim($line);
-            l("Line: $line");
             if ($line == $gencronline) {
                 return true;
             }
@@ -91,21 +109,34 @@ class CronController extends AbstractActionController
         return false;
     }
 
-    public function installAction() {
+    public function removeAction() {
+        throw new Exception\NotImplementedException('removeAction');
+        return new ViewModel();
+    }
+
+    public function installAction()
+    {
+        $this->init();
         l('----- Installing script in system----');
         if (!$this->isCronInstalled()) {
-            l('[+] installing cron');
-            $this->installCron();
+            if ($this->installCron()) {
+                l('[+] Cron installed');
+            } else {
+                l('[-] Cannot install cron');
+            }
         } else {
-            l('cron already installed');
+            l('[+] Cron already installed');
         }
         return new ViewModel();
     }
 
     public function entryAction()
     {
+        $this->init();
         if ($this->getParam('install')) {
         	return $this->installAction();
+        } else if ($this->getParam('remove')) {
+            return $this->removeAction();
         }
         l("---- TmpFileUpload - Cron (".$this->VERSION.") -----");
         $tbl = Helper::getFileTable($this->getServiceLocator());
@@ -130,33 +161,24 @@ class CronController extends AbstractActionController
         return new ViewModel(); // display standard index page
     }
 
-//     public function setServiceLocator(ServiceLocatorInterface $serviceLocator) {
-//         $this->serviceLocator = $serviceLocator;
+//     public function resetpasswordAction(){
+//         $request = $this->getRequest();
+//         // Make sure that we are running in a console and the user has not tricked our
+//         // application into running this action from a public web server.
+//         if (!$request instanceof ConsoleRequest){
+//             throw new \RuntimeException('You can only use this action from a console!');
+//         }
+//         // Get user email from console and check if the user used --verbose or -v flag
+//         $userEmail   = $request->getParam('userEmail');
+//         $verbose     = $request->getParam('verbose');
+//         // reset new password
+//         $newPassword = Rand::getString(16);
+//         //  Fetch the user and change his password, then email him ...
+//         // [...]
+//         if (!$verbose){
+//             return "Done! $userEmail has received an email with his new password.\n";
+//         }else{
+//             return "Done! New password for user $userEmail is '$newPassword'. It has also been emailed to him. \n";
+//         }
 //     }
-
-    public function resetpasswordAction(){
-        $request = $this->getRequest();
-
-        // Make sure that we are running in a console and the user has not tricked our
-        // application into running this action from a public web server.
-        if (!$request instanceof ConsoleRequest){
-            throw new \RuntimeException('You can only use this action from a console!');
-        }
-
-        // Get user email from console and check if the user used --verbose or -v flag
-        $userEmail   = $request->getParam('userEmail');
-        $verbose     = $request->getParam('verbose');
-
-        // reset new password
-        $newPassword = Rand::getString(16);
-
-        //  Fetch the user and change his password, then email him ...
-        // [...]
-
-        if (!$verbose){
-            return "Done! $userEmail has received an email with his new password.\n";
-        }else{
-            return "Done! New password for user $userEmail is '$newPassword'. It has also been emailed to him. \n";
-        }
-    }
 }
