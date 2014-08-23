@@ -43,6 +43,7 @@ class UploadController extends AbstractActionController {
 
     public function uploadAction()
     {
+        $cron = $this->getServiceLocator()->get('TmpFileUpload\Helper\Cron');
         try {
             $form = new UploadForm($this->getServiceLocator(), 'file-form');
             $request = $this->getRequest();
@@ -66,7 +67,7 @@ class UploadController extends AbstractActionController {
         } catch (Exception\HashExistsException $e) {
             $row = $this->getFileTable()->getHash($e->getMessage());
             $data = $row->getArrayCopy();
-            $data['mime'] = $this->getMimeTable
+            $data['mime'] = $this->getMimeTable()
                                  ->getMime($row->mime_id)->value;
             return $this->redirectToSuccessPage($data);
         } catch (Exception\FileSizeMaxException $e) {
@@ -142,7 +143,9 @@ class UploadController extends AbstractActionController {
 
     public function serveAction()
     {
-        $this->deleteExpired();
+        if ($this->getConfig()['delete_expired_on_serve']) {
+            $this->deleteExpired();
+        }
         $pubkey = $this->params()->fromRoute('pubkey');
         try {
             $file = $this->getFileTable()->getPubkey($pubkey, true);

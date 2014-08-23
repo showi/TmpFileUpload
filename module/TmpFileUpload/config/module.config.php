@@ -15,6 +15,7 @@ return array(
     'bin_exiv2' => '/usr/bin/exiv2',
     'bin_crontab' => '/usr/bin/crontab',
     'bin_php' => '/usr/bin/php',
+    'delete_expired_on_serve' => false,
     'file_expire_in' => '+5 min',
     'db' => array(
         'driver' => 'Pdo',
@@ -25,16 +26,18 @@ return array(
     ),
     'service_manager' => array(
         'factories' => array(
-            'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory'
+            'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',
+
         )
     ),
     'factories' => array(
         'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',
+        'TmpFileUpload\Helper\Cron' => 'TmpFileUpload\Helper\CronHelper'
     ),
     'controllers' => array(
         'invokables' => array(
             'TmpFileUpload\Controller\Upload' => 'TmpFileUpload\Controller\UploadController',
-            'TmpFileUpload\Controller\Cron' => 'TmpFileUpload\Controller\CronController'
+            'TmpFileUpload\Controller\Cron'   => 'TmpFileUpload\Controller\CronController',
         )
     ),
     'router' => array(
