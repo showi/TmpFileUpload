@@ -120,5 +120,13 @@ class CommonHelper {
     public static function link($url, $txt) {
         return "<a href=\"$url\">$txt</a>";
     }
+
+    public static function getFileTable($serviceLocator) {
+        return $serviceLocator->get('TmpFileUpload\Model\FileTable');
+    }
+
+    public static function getMimeTable($serviceLocator) {
+        return $serviceLocator->get('TmpFileUpload\Model\MimeTable');
+    }
 }
 ;

@@ -1,0 +1,5 @@
+#!/bin/bash
+
+#cd ../../../public/
+export APPLICATION_ENV=development
+/usr/bin/php index.php cron $1

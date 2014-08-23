@@ -13,6 +13,7 @@
 */
 return array(
     'bin_exiv2' => '/usr/bin/exiv2',
+    'bin_crontab' => '/usr/bin/crontab',
     'file_expire_in' => '+5 min',
     'db' => array(
         'driver' => 'Pdo',
@@ -31,7 +32,8 @@ return array(
     ),
     'controllers' => array(
         'invokables' => array(
-            'TmpFileUpload\Controller\Upload' => 'TmpFileUpload\Controller\UploadController'
+            'TmpFileUpload\Controller\Upload' => 'TmpFileUpload\Controller\UploadController',
+            'TmpFileUpload\Controller\Cron' => 'TmpFileUpload\Controller\CronController'
         )
     ),
     'router' => array(
@@ -94,4 +96,19 @@ return array(
     	   'uploadfilter' => '\TmpFileUpload\Filter\UploadFilter',
         ),
     ),
+    'console' => array(
+        'router' => array(
+            'routes' => array(
+                'cron-executable' => array(
+                    'options' => array(
+                         'route'    => 'cron [install]',
+                         'defaults' => array(
+                                'controller' => 'TmpFileUpload\Controller\Cron',
+                                'action'     => 'entry'
+                            )
+                    )
+                )
+            )
+        )
+    )
 );
