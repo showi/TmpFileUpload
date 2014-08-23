@@ -43,7 +43,7 @@ class UploadController extends AbstractActionController {
 
     public function uploadAction()
     {
-        $cron = $this->getServiceLocator()->get('TmpFileUpload\Helper\Cron');
+        //$cron = $this->getServiceLocator()->get('TmpFileUpload\Helper\Cron');
         try {
             $form = new UploadForm($this->getServiceLocator(), 'file-form');
             $request = $this->getRequest();
